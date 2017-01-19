@@ -1,0 +1,22 @@
+{
+  "name": "yacare",
+  "homepage": "https://github.com/jeronimonunez/yacare",
+  "authors": [
+    "Jeronimo Nunez <jeronimonunez@gmail.com>"
+  ],
+  "description": "yacare is a silly terminal emulator for websites",
+  "main": "src/yacare.js",
+  "keywords": [
+    "terminal",
+    "emulator",
+    "matrix"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
