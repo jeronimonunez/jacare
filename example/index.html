@@ -1,0 +1,92 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yacare</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+    <link rel="stylesheet" href="../bower_components/normalize-css/normalize.css">
+    <link rel="stylesheet" href="../src/yacare.css">
+    <link rel="stylesheet" href="css/example.css">
+  </head>
+  <body>
+
+  	<main class="main">
+  		
+	    <h1>Yacare</h1>
+	    
+	    <div class="content">
+	   		<article id="frog-1">
+				<h3>frog 1</h3>
+				<pre>
+  @..@
+ (----)
+( >__< )
+^^ ~~ ^^
+				</pre>
+				<h4><a href="http://allaboutfrogs.org/gallery/frogstuff/ascii.html">credit</a></h4>
+				<div class="bubble">hello world</div>
+	   		</article>
+	   		<article id="frog-2">
+	   			<h3>frog 2</h3>
+				<pre>
+  @..@
+ (----)
+( >__< )
+^^ ~~ ^^
+				</pre>
+	   			<h4><a href="http://allaboutfrogs.org/gallery/frogstuff/ascii.html">credit</a></h4>
+	   		</article>
+
+	   		<article id="frog-3">
+	   			<h3>frog 3</h3>
+				<pre>
+  @..@
+ (----)
+( >__< )
+^^ ~~ ^^
+				</pre>
+	   			<h4><a href="http://allaboutfrogs.org/gallery/frogstuff/ascii.html">credit</a></h4>
+	   		</article>
+	    </div>
+
+	    <div id="terminal-1"></div>
+
+	    <div id="terminal-2"></div>
+
+	    <div id="terminal-3"></div>
+
+  	</main>
+
+	<script src="../bower_components/lodash/dist/lodash.min.js"></script>
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../src/yacare.js"></script>
+    <script type="text/javascript">
+
+    	var frogsayCommand = function(frog, text) {
+    		$('#'+frog).find(".bubble").text(text).slideDown();
+    	}
+
+    	var yacareCommands = [
+    		{
+    			name: 'frogsay',
+    			exec: frogsayCommand,
+    			phrase: "Check the frog upside",
+    			delay: 0,
+    			arguments: ["var", "string"],
+    		}
+    	];
+
+    	var terminal1 = $('#terminal-1').yacare({ 
+    		style: 'static',
+    		backgroundColor: '#000',
+    		width: '600px',
+    		// grettings: 'Welcome to yacare terminal <br> type something',
+    		placeholder: 'Type something',
+    		pre: '>',
+    		commands: yacareCommands,
+    	});
+    </script>
+  </body>
+</html>
