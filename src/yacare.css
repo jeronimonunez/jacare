@@ -17,11 +17,15 @@ body {
 }
 .yacare-terminal .log {
 	height: 300px;
+	overflow-x: hidden;
 	overflow-y: auto;
 	width: 100%;
 	font-weight: bold;
 	border-bottom: 0;
 	padding: 10px;
+}
+.yacare-terminal .log .log-wrapper {
+	height: auto;
 }
 .yacare-terminal .log p {
 	margin: 0 0 1em 0;

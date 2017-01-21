@@ -2,25 +2,22 @@
 
 (function ( $ ) {
 
-	$.fn.scrollBottom = function() { 
-	    return $(document).height() - this.scrollTop() - this.height(); 
-	};
-
 	$.fn.terminalLog = function( options ) {
 		var settings = $.extend({
 			style: 'top'
 		}, options);
 
 		var $element = this;
+        var $wrapper = $element.children(".log-wrapper");
 		$element.addClass('ignited');
 
 		return {
 			push: function( text ) {
-				$element.append("<p>" + text + "</p>");
-	        	$element.scrollTop($element.scrollBottom());
+				$wrapper.append("<div>" + text + "</div>");
+	        	$element.scrollTop($wrapper.height());
 			},
 			clean: function() {
-				$element.html('');
+				$wrapper.html('');
 			}
 		};
 	};
@@ -91,7 +88,7 @@
     		commands: [],
     		placeholder: '',
     		yacareClass: 'yacare-terminal',
-    		template: '<form class="command-form"><div class="log"></div><div class="command-line-wrapper"><span class="pre"></span><input type="text" class="command-line"></div></form>',
+    		template: '<form class="command-form"><div class="log"><div class="log-wrapper"></div></div><div class="command-line-wrapper"><span class="pre"></span><input type="text" class="command-line"></div></form>',
         }, options );
 
         var version = "<pre>\n\
