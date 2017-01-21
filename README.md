@@ -1,4 +1,4 @@
 # Yacare
 Yacare is a silly terminal emulator for websites
 
-![Alt text](/screenshot.png "Yacare screenshot")
+![Alt text](/screencapture.png "Yacare screenshot")
