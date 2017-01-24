@@ -14,9 +14,48 @@ body {
 	border: 1px solid #333;
 	position: relative;
 	color: #0f0;
+	overflow: hidden;
+	padding: 10px;
+}
+.yacare-terminal.fallout {
+	-webkit-box-shadow:inset 0 0 10px 5px rgba(0,255,0,.5);
+	box-shadow:inset 0 0 10px 5px rgba(0,255,0,.5);
+	border-radius: 10px;
+} 
+.yacare-terminal.fallout::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    // background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background: linear-gradient(rgba(18, 16, 16, .5) 50%, rgba(0, 255, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 2;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+}
+.scanline {
+	display: none;
+}
+.yacare-terminal.fallout .scanline {
+	animation: scan 5s 5s infinite, scroll 5s 5s infinite;
+	background: -moz-linear-gradient(top,  rgba(0,221,0,0) 0%, rgba(0,221,0,1) 50%, rgba(0,221,0,0) 100%);
+	background: -webkit-linear-gradient(top,  rgba(0,221,0,0) 0%,rgba(0,221,0,1) 50%,rgba(0,221,0,0) 100%);
+	background: linear-gradient(to bottom,  rgba(0,221,0,0) 0%,rgba(0,221,0,1) 50%,rgba(0,221,0,0) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0000dd00', endColorstr='#0000dd00',GradientType=0 );
+	display: block;
+	height: 50px;
+	opacity: 0.05;
+	position: absolute;
+		left: 0;
+		right: 0;
+		top: -50px;
+	z-index: 2;
 }
 .yacare-terminal .log {
-	height: 300px;
+	height: 400px;
 	overflow-x: hidden;
 	overflow-y: auto;
 	width: 100%;
@@ -27,8 +66,25 @@ body {
 .yacare-terminal .log .log-wrapper {
 	height: auto;
 }
-.yacare-terminal .log p {
-	margin: 0 0 1em 0;
+.yacare-terminal .log .log-wrapper p,
+.yacare-terminal .log .log-wrapper div {
+	margin: 0 0 .5em 0;
+}
+.yacare-terminal .log .log-wrapper div.ya {
+	color: #ff0;
+	text-transform: uppercase;
+}
+.yacare-terminal .log .log-wrapper div.ya i.ya {
+	background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAABhklEQVRIS6WWPU7DQBCF1+IASKlpiYSggBYo0lJQIhroOQISlMAdqEODKLkABSA6KECJQps6Ug4Qgd5Kz5qMZ2ZtZavYXr/vzd86Veqwdvc3//T2r/ffKpIIH8oXIX563WtoPd7MUgRpBfDESYsgRUBJXELwW0cTArQ4nMqlU/bzOk/fL4t6C2AugAXVIpdHH2nvoJ92BmtZzKsL7sOQCYC4JwCXXNuH60sRQVACTQDF8abnsG1nhxFQxEoBnpXqwc5qpChKj3aOepxfbeXbsri4/nybpApLDxMq7xXYSg2col7D21GGASRbtQbQ+cPduBNAp8ucA/Y78yavWQM61Z0jo5J1ISi7pYgcFPaxBzjeOFnK2PP0KRce6YKJusgWQIpaAC1O0tnFfQxgiHpYIABnWHAXAQgzU6QnkZs5vZE49iKCRpHbnpaEee5dAB6wRaMOwb5IPARIiGwNDezqHlqNSZYAtlzJvZV76hQ/OLKv9VHBWVnpm8xzSYvIfxgrAdqe/d6+f0ieBtLgQqRWAAAAAElFTkSuQmCC');
+	display: inline-block;
+	width: 24px;
+	height: 24px;
+    margin: 0 7px 0 0;
+    top: 4px;
+    position: relative;
+}
+.yacare-terminal .log .log-wrapper div.error {
+	color: #f00;
 }
 .yacare-terminal .log p:last-child {
 	margin-bottom: 0;
@@ -53,6 +109,20 @@ body {
     position: absolute;
     font-size: 2em;
     font-weight: 900;
-    left: 9px;
-    bottom: 3px;
+    left: 20px;
+    bottom: 12px;
+}
+.yacare-terminal .command-line-wrapper.disabled .pre {
+	opacity: .3;
+}
+
+
+@keyframes scan {
+	from { top: -50px; }
+	to { top: 100% }
+}
+
+@keyframes scroll {
+	0% { height: 0 }
+	100% { height: 100%; }
 }

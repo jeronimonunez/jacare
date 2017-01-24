@@ -18,36 +18,33 @@
 	    
 	    <div class="content">
 	   		<article id="frog-1">
-				<h3>frog 1</h3>
-				<pre>
+  				<h3>frog 1</h3>
+    			<pre>
   @..@
  (----)
 ( >__< )
 ^^ ~~ ^^
-				</pre>
-				<h4><a href="http://allaboutfrogs.org/gallery/frogstuff/ascii.html">credit</a></h4>
-				<div class="bubble">hello world</div>
+    			</pre>
+				  <div class="bubble">hello world</div>
 	   		</article>
 	   		<article id="frog-2">
 	   			<h3>frog 2</h3>
-				<pre>
+  				<pre>
   @..@
  (----)
 ( >__< )
 ^^ ~~ ^^
-				</pre>
-	   			<h4><a href="http://allaboutfrogs.org/gallery/frogstuff/ascii.html">credit</a></h4>
+  				</pre>
 	   		</article>
 
 	   		<article id="frog-3">
 	   			<h3>frog 3</h3>
-				<pre>
+  				<pre>
   @..@
  (----)
 ( >__< )
 ^^ ~~ ^^
-				</pre>
-	   			<h4><a href="http://allaboutfrogs.org/gallery/frogstuff/ascii.html">credit</a></h4>
+  				</pre>
 	   		</article>
 	    </div>
 
@@ -56,6 +53,10 @@
 	    <div id="terminal-2"></div>
 
 	    <div id="terminal-3"></div>
+
+      <footer>
+        <a href="http://allaboutfrogs.org/gallery/frogstuff/ascii.html">ascii credit</a>
+      </footer>
 
   	</main>
 
@@ -68,24 +69,75 @@
     		$('#'+frog).find(".bubble").text(text).slideDown();
     	}
 
-    	var yacareCommands = [
-    		{
-    			name: 'frogsay',
-    			exec: frogsayCommand,
+    	var examplePrograms = {
+    		'frog': {
+    			name: 'frog',
+    			commands: {
+            '': function( log, self, args ) {
+              if( args.length != 2) {
+                log.push("This program takes 2 arguments: frog-number and a string","error");
+                return false;
+              }
+              var $frog = $('#frog-'+args[0]);
+              if($frog.length == 0) {
+                log.push("Frog doesn't found","error");
+                return false;
+              }
+              var $bubble = $frog.find(".bubble");
+              if($bubble.length) {
+                $bubble.slideUp(300, function() {
+                  $bubble.remove();
+                  showBubble( $frog );
+                });
+              } else {
+                showBubble( $frog );
+              }
+
+              function showBubble( $f ) {
+                
+                  var $bubble = $('<div class="bubble">' + args[1] + '</div>').css('display', 'none');
+                  $bubble.hide().appendTo($f).slideDown();
+              }
+              log.push(self.phrase);
+            }
+          },
     			phrase: "Check the frog upside",
     			delay: 0,
-    			arguments: ["var", "string"],
-    		}
-    	];
+          usage: "frog &lt;frog number&gt; 'Phrase' <br>\
+                  <br>\
+                  By @jeronimonunez",
+          version: "0.0.1",
+          author: "@jeronimonunez"
+    		},
+        'sum': {
+          name: 'sum',
+          phrase: 'you can sum two numbers!',
+          usage: 'Usage: <br> sum &lt;number&gt; &lt;number&gt;',
+          author: 'jeronimonunez',
+          delay: 0,
+          version: '0.0.1',
+          commands: {
+            '': function(log, self, args) {
+              if( args.length < 2) {
+                log.push("This program takes 2 arguments","error");
+                return false;
+              }
+              args = _.map( args, parseFloat );
+              var summatory = _.sum(args);
+              log.push("&gt; "+summatory);
+            }
+          }
+        }
+    	};
 
     	var terminal1 = $('#terminal-1').yacare({ 
     		style: 'static',
     		backgroundColor: '#000',
     		width: '600px',
+        yacareClass: 'fallout',
     		// grettings: 'Welcome to yacare terminal <br> type something',
     		placeholder: 'Type something',
-    		pre: '>',
-    		commands: yacareCommands,
+    		programs: examplePrograms,
     	});
     </script>
   </body>
