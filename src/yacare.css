@@ -18,9 +18,9 @@ body {
 	padding: 10px;
 }
 .yacare-terminal.fallout {
-	-webkit-box-shadow:inset 0 0 10px 5px rgba(0,255,0,.5);
-	box-shadow:inset 0 0 10px 5px rgba(0,255,0,.5);
-	border-radius: 10px;
+	-webkit-box-shadow:inset 0 0 18px 18px rgba(0,0,0,.75);
+	box-shadow:inset 0 0 18px 18px rgba(0,0,0,.75);
+	border-radius: 30px;
 } 
 .yacare-terminal.fallout::before {
     content: " ";
@@ -31,10 +31,11 @@ body {
     bottom: 0;
     right: 0;
     // background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-    background: linear-gradient(rgba(18, 16, 16, .5) 50%, rgba(0, 255, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background: linear-gradient(rgba(18, 16, 16, .5) 50%, rgba(0, 255, 0, 0.15) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
     z-index: 2;
     background-size: 100% 2px, 3px 100%;
     pointer-events: none;
+    border-radius: 30px;
 }
 .scanline {
 	display: none;
@@ -125,4 +126,28 @@ body {
 @keyframes scroll {
 	0% { height: 0 }
 	100% { height: 100%; }
+}
+
+
+.yacare-terminal .logo {
+    background-image: url(/src/img/yacare.png);
+    background-repeat: no-repeat;
+    background-position: 90% 90%;
+    position: absolute;
+    width: 110px;
+    height: 72px;
+    bottom: 20px;
+    right: 20px;
+    transition-property: transform;
+    transition-duration: 2s;
+    animation-name: rotate; 
+    animation-duration: 5s; 
+    animation-iteration-count: infinite;
+    animation-timing-function: cubic-bezier(0.4, 0, 1, 1);
+    opacity: .2;
+}
+
+@keyframes rotate {
+    from {transform: rotateY(0deg);}
+    to {transform: rotateY(360deg);}
 }

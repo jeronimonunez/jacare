@@ -21,6 +21,9 @@
             isBusy: function() {
                 return this.busy;
             },
+            setBusy: function( state ) {
+                return this.busy = state;
+            },
 			push: function( text, style ) {
                 style = style == undefined ? style = '' : style;
 				$wrapper.append("<div class='"+style+"'>" + text + "</div>");
@@ -44,6 +47,7 @@
                 var self = this;
                 self.push( "> " + question );
                 self.busy = true;
+                console.log(self.busy);
 
                 var p = new Promise(function(resolve, reject) {
     
@@ -110,8 +114,10 @@
                         $element.css('color', arguments);
                     },
                     "?": function( log, self, arguments ) {
-                        log.prompt("are you ok?").then(function(response) {
+                        log.prompt("are you ok? y/n").then(function(response) {
                             log.push(response);
+                            if (response == "y") log.push("cool");
+                            else log.push("stay strong");
                         });
                     }
                 },
@@ -210,7 +216,7 @@
     		pre: '$',
     		placeholder: '',
     		yacareClass: '',
-    		template: '<form class="command-form"><div class="log"><div class="log-wrapper"></div></div><div class="command-line-wrapper"><span class="pre"></span><input type="text" class="command-line"></div></form><div class="scanline"></div>',
+    		template: '<form class="command-form"><div class="log"><div class="log-wrapper"></div></div><div class="command-line-wrapper"><span class="pre"></span><input type="text" class="command-line"></div></form><div class="logo"></div><div class="scanline"></div>',
         }, options );
 
         var version = "<pre>\n\
@@ -278,14 +284,11 @@
             console.log(argumentsOrCommands);
 
             if(_.split( line, " " ).length == 1) {
-                console.log("no command no args");
                 com = '';
             } else if( isArgument( argumentsOrCommands ) ){
-                console.log("no command, yes args");
                 com = '';
                 arguments = convertArgumentsToArray( argumentsOrCommands );
             } else {
-                console.log("command and/or args");
                 // is command
                 var wordsArray = _.words( argumentsOrCommands, /[^, ]+/g );
                 com = _.first(wordsArray);
@@ -295,8 +298,6 @@
             arguments = _.flatten(arguments);
 
             if (com == 'usage') { log.push(program.usage); return false; }
-
-            console.log("my command", com);
 
             if ( typeof program.commands[com] == 'function' ) {
                 return program.commands[com]( log, program, arguments );
