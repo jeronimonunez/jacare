@@ -8,118 +8,118 @@
 		}, options);
 
 		var $element = this;
-        var $wrapper = $element.children(".log-wrapper");
-        var $form = $element.parents("form");
-        var $inputWrapper = $form.find('.command-line-wrapper');
-        var $input =  $inputWrapper.find('.command-line');
-        var $pre = $inputWrapper.find('.pre');
+    var $wrapper = $element.children(".log-wrapper");
+    var $form = $element.parents("form");
+    var $inputWrapper = $form.find('.command-line-wrapper');
+    var $input =  $inputWrapper.find('.command-line');
+    var $pre = $inputWrapper.find('.pre');
 		$element.addClass('ignited');
 
-        var busy = false;
+    var busy = false;
 
 		return {
-            isBusy: function() {
-                return this.busy;
-            },
-            setBusy: function( state ) {
-                return this.busy = state;
-            },
+      isBusy: function() {
+        return this.busy;
+      },
+      setBusy: function( state ) {
+        return this.busy = state;
+      },
 			push: function( text, style ) {
-                style = style == undefined ? style = '' : style;
+        style = style == undefined ? style = '' : style;
 				$wrapper.append("<div class='"+style+"'>" + text + "</div>");
-	        	$element.scrollTop($wrapper.height());
+	      $element.scrollTop($wrapper.height());
 			},
 			clean: function() {
 				$wrapper.html('');
 			},
-            block: function() {
-                $input.attr('disabled', 'disabled').addClass('disabled');
-                $inputWrapper.addClass('disabled');
-            },
-            unblock: function() {
-                $input.removeAttr('disabled').removeClass('disabled');
-                $inputWrapper.removeClass('disabled');
-            },
-            cleanInput: function() {
-                $input.val('');
-            },
-            prompt: function( question ) {
-                var self = this;
-                self.push( "> " + question );
-                self.busy = true;
-                console.log(self.busy);
+      block: function() {
+        $input.attr('disabled', 'disabled').addClass('disabled');
+        $inputWrapper.addClass('disabled');
+      },
+      unblock: function() {
+        $input.removeAttr('disabled').removeClass('disabled');
+        $inputWrapper.removeClass('disabled');
+      },
+      cleanInput: function() {
+        $input.val('');
+      },
+      prompt: function( question ) {
+        var self = this;
+        self.push( "> " + question );
+        self.busy = true;
+        console.log(self.busy);
 
-                var p = new Promise(function(resolve, reject) {
-    
-                    $form.on('submit', function(e) {
-                        self.busy = false;
-                        resolve($input.val());
-                        self.cleanInput();
-                    });
-                });
+        var p = new Promise(function(resolve, reject) {
 
-                return p;
-            },
+          $form.on('submit', function(e) {
+            self.busy = false;
+            resolve($input.val());
+            self.cleanInput();
+          });
+        });
+
+        return p;
+      },
 		};
 	};
- 
-    $.fn.yacare = function( options ) {
 
-    	var log;
+  $.fn.yacare = function( options ) {
 
-        var $element = this;
+    var log;
 
-    	var cleanLog = function(log,s, a) {
-    		return log.clean();
-    	};
+    var $element = this;
 
-    	var printVersion = function(log,s,a) {
-    		log.push( version );
-    	};
+    var cleanLog = function(log,s, a) {
+    return log.clean();
+    };
 
-    	var retrievePrograms = function() {
-    		return _.map(defaultPrograms, 'name');
-    	};
- 
-        var defaultPrograms = {
-            'ya': {
-                name: 'ya',
-                phrase: 'Yacare main program, type "ya usage" for help',
-                commands: {
-                    '': function( log, self, arguments ) {
-                        var arguments = arguments[0];
-                        var output = (arguments == undefined || arguments =="") ? self.phrase : arguments;
-                        if(output == 'hello') {
-                            this.yatalk( log, self, 'hi there' );
-                        } else {
-                            log.push(output);
-                        }
-                        return output;
-                    },
-                    'yatalk': function( log, self, arguments ) {
-                        log.push("<i class='ya'></i>" + arguments, 'ya');
-                        return arguments;
-                    },
-                    'version': function( log, self, arguments ) {
-                        return log.push(self.version);
-                    },
-                    'kill': function( log, self, arguments ) {
-                        log.block();
-                        return this.yatalk( log, self, "bye bye");
-                    },
-                    'bg': function( log, self, arguments ) {
-                        $element.css('background-color', arguments);
-                    },
-                    'color': function( log, self, arguments ) {
-                        $element.css('color', arguments);
-                    },
-                    "?": function( log, self, arguments ) {
-                        log.prompt("are you ok? y/n").then(function(response) {
-                            log.push(response);
-                            if (response == "y") log.push("cool");
-                            else log.push("stay strong");
-                        });
-                    }
+  	var printVersion = function(log,s,a) {
+  		log.push( version );
+  	};
+
+  	var retrievePrograms = function() {
+  		return _.map(defaultPrograms, 'name');
+  	};
+
+    var defaultPrograms = {
+      'ya': {
+        name: 'ya',
+        phrase: 'Yacare main program, type "ya usage" for help',
+        commands: {
+          '': function( log, self, arguments ) {
+            var arguments = arguments[0];
+            var output = (arguments == undefined || arguments =="") ? self.phrase : arguments;
+            if(output == 'hello') {
+              this.yatalk( log, self, 'hi there' );
+            } else {
+              log.push(output);
+            }
+            return output;
+          },
+          'yatalk': function( log, self, arguments ) {
+            log.push("<i class='ya'></i>" + arguments, 'ya');
+            return arguments;
+          },
+          'version': function( log, self, arguments ) {
+            return log.push(self.version);
+          },
+            'kill': function( log, self, arguments ) {
+                log.block();
+                return this.yatalk( log, self, "bye bye");
+            },
+            'bg': function( log, self, arguments ) {
+                $element.css('background-color', arguments);
+            },
+            'color': function( log, self, arguments ) {
+                $element.css('color', arguments);
+            },
+            "?": function( log, self, arguments ) {
+                log.prompt("are you ok? y/n").then(function(response) {
+                    log.push(response);
+                    if (response == "y") log.push("cool");
+                    else log.push("stay strong");
+                });
+            }
                 },
                 delay: 0,
                 usage: "Usage:<br>\
@@ -138,9 +138,9 @@
                 name: 'list',
                 phrase: "List available programs",
                 commands: {
-                    '': function(log,self, arguments) { 
-                        return log.push( retrievePrograms() ); 
-                    }   
+                    '': function(log,self, arguments) {
+                        return log.push( retrievePrograms() );
+                    }
                 },
                 delay: 0,
                 usage: 'just type "list"',
@@ -210,14 +210,14 @@
 
         var settings = $.extend({
             style: 'static',
-    		backgroundColor: '#000',
-    		width: '400px',
-    		greetings: 'Welcome to yacare terminal',
-    		pre: '$',
-    		placeholder: '',
-    		yacareClass: '',
-    		template: '<form class="command-form"><div class="log"><div class="log-wrapper"></div></div><div class="command-line-wrapper"><span class="pre"></span><input type="text" class="command-line"></div></form><div class="logo"></div><div class="scanline"></div>',
-        }, options );
+        		backgroundColor: '#000',
+        		width: '400px',
+        		greetings: 'Welcome to yacare terminal',
+        		pre: '$',
+        		placeholder: '',
+        		yacareClass: '',
+        		template: '<form class="command-form"><div class="log"><div class="log-wrapper"></div></div><div class="command-line-wrapper"><span class="pre"></span><input type="text" class="command-line"></div></form><div class="logo"></div><div class="scanline"></div>',
+            }, options );
 
         var version = "<pre>\n\
 =================================== \n\n\
@@ -231,10 +231,10 @@
   		settings.greetings += version;
 
         defaultPrograms = $.extend( defaultPrograms, settings.programs );
- 
+
         var $form = setTemplate($element, settings);
         var $input = $element.find('.command-line');
-        
+
         log = $element.find('.log').terminalLog();
 
         var initTerminal = function() {
@@ -271,7 +271,7 @@
             $input.val('');
 
             if( !commandMatch( enteredCommand ) ) {
-                log.push( "Yacare: Command not found: " + enteredCommand, "error" ); 
+                log.push( "Yacare: Command not found: " + enteredCommand, "error" );
                 return false;
             }
 
@@ -304,7 +304,7 @@
             } else {
                 log.push("that argument or command isn't valid","error");
                 return false;
-            } 
+            }
 
         };
 
@@ -378,9 +378,9 @@
         // settings.commands();
 
         return this;
- 
+
     };
-    
+
     function setTemplate($e, settings) {
     	$e
     		.addClass( 'yacare-terminal ' + settings.yacareClass )

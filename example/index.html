@@ -13,9 +13,9 @@
   <body>
 
   	<main class="main">
-  		
+
 	    <h1>Yacare</h1>
-	    
+
 	    <div class="content">
 	   		<article id="frog-1">
   				<h3>frog 1</h3>
@@ -55,6 +55,30 @@
               <div id="terminal-1"></div>
             </div>
           </div>
+          <div class="panel">
+            <div class="ventilation">
+              <div class="screw"></div>
+              <div class="screw"></div>
+              <div class="racks">
+                <span class="rack"></span>
+                <span class="rack"></span>
+                <span class="rack"></span>
+                <span class="rack"></span>
+                <span class="rack"></span>
+                <span class="rack"></span>
+                <span class="rack"></span>
+                <span class="rack"></span>
+                <span class="rack"></span>
+                <span class="rack"></span>
+                <span class="rack"></span>
+                <span class="rack"></span>
+              </div>
+            </div>
+            <div class="power-panel">
+              <span>POWER</span>
+              <button>Press</button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -82,6 +106,7 @@
     			name: 'frog',
     			commands: {
             '': function( log, self, args ) {
+              log.push(args);
               if( args.length != 2) {
                 log.push("This program takes 2 arguments: frog-number and a string","error");
                 return false;
@@ -102,7 +127,7 @@
               }
 
               function showBubble( $f ) {
-                
+
                   var $bubble = $('<div class="bubble">' + args[1] + '</div>').css('display', 'none');
                   $bubble.hide().appendTo($f).slideDown();
               }
@@ -138,7 +163,7 @@
         }
     	};
 
-    	var terminal1 = $('#terminal-1').yacare({ 
+    	var terminal1 = $('#terminal-1').yacare({
     		style: 'static',
     		backgroundColor: '#000',
     		width: '600px',
