@@ -9,7 +9,7 @@ body {
 }
 
 .yacare-terminal {
-	max-width: 100%;	
+	max-width: 100%;
 	background-color: #111;
 	border: 1px solid #333;
 	position: relative;
@@ -21,7 +21,7 @@ body {
 	-webkit-box-shadow:inset 0 0 18px 18px rgba(0,0,0,.75);
 	box-shadow:inset 0 0 18px 18px rgba(0,0,0,.75);
 	border-radius: 30px;
-} 
+}
 .yacare-terminal.fallout::before {
     content: " ";
     display: block;
@@ -64,6 +64,16 @@ body {
 	border-bottom: 0;
 	padding: 10px;
 }
+.yacare-terminal .log::-webkit-scrollbar {
+  width: 0.2em;
+}
+.log::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+.log::-webkit-scrollbar-thumb {
+  background-color: #333;
+  outline: 1px solid #333;
+}
 .yacare-terminal .log .log-wrapper {
 	height: auto;
 }
@@ -94,6 +104,21 @@ body {
 	width: 100%;
 }
 .yacare-terminal .command-line {
+  position: absolute;
+  left: -16px;
+  top: 0;
+  width: 20px;
+  height: 16px;
+  background: transparent;
+  border: none;
+  color: transparent;
+  outline: none;
+  padding: 0;
+  resize: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.yacare-terminal .input-clone {
 	width: 100%;
 	padding: 10px 20px 10px 50px;
 	font-weight: bold;
@@ -103,7 +128,7 @@ body {
 	color: #0f0;
 }
 .yacare-terminal .command-line:focus {
-	outline: 0;	
+	outline: 0;
 }
 
 .yacare-terminal .pre {
@@ -128,6 +153,28 @@ body {
 	100% { height: 100%; }
 }
 
+.caret {
+  animation: blink 1s linear infinite alternate;
+}
+.caret:empty {
+  display: inline-block;
+  min-width: 10px;
+  height: 1.2em;
+  line-height: 1.5em;
+  top: 4px;
+  position: relative;
+}
+@keyframes blink {
+  0%, 49% {
+    color: #000;
+    background-color: #0f0;
+  }
+  50%, 100% {
+    color: #0f0;
+    background-color: #000;
+  }
+}
+
 
 .yacare-terminal .logo {
     background-image: url(/src/img/yacare.png);
@@ -140,8 +187,8 @@ body {
     right: 20px;
     transition-property: transform;
     transition-duration: 2s;
-    animation-name: rotate; 
-    animation-duration: 5s; 
+    animation-name: rotate;
+    animation-duration: 5s;
     animation-iteration-count: infinite;
     animation-timing-function: cubic-bezier(0.4, 0, 1, 1);
     opacity: .2;
